@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — The Young Women's Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #8B1A1A;
+      --red-dark:  #5C0E0E;
+      --red-deep:  #3D0808;
+      --cream:     #F5ECD7;
+      --cream-mid: #EDD9B4;
+      --tan:       #C9A87C;
+      --tan-dark:  #9A7A50;
+      --black:     #1A1108;
+      --white:     #FAF6EE;
+      --green:     #4A6741;
+
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'Libre Baskerville', serif;
+      --font-script:  'Pinyon Script', cursive;
+      --font-editorial: 'EB Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* ── SITE NAV ──────────────────────────────────────── */
+    .site-nav-wrap {
+      background: var(--red);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(92,14,14,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(61,8,8,0.5) 0%, transparent 55%);
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.2rem, 3vw, 2.6rem);
+      padding: 1.6rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-mid);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] { opacity: 1; color: var(--cream); border-bottom: 1px solid var(--tan); padding-bottom: 2px; }
+
+    /* ── PAGE HEADER ───────────────────────────────────── */
+    .page-header {
+      background: var(--red);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(92,14,14,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(61,8,8,0.5) 0%, transparent 55%);
+      text-align: center;
+      padding: 3.5rem 2rem 5rem;
+      position: relative;
+    }
+
+    .page-header__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 1rem;
+    }
+
+    .page-header__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .page-header__title em { font-weight: 600; font-style: normal; }
+
+    .page-header__sub {
+      max-width: 600px;
+      margin: 1.4rem auto 0;
+      font-family: var(--font-editorial);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--cream-mid);
+      line-height: 1.8;
+    }
+
+    .page-header__bottom-rule {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--tan) 30%, var(--cream-mid) 50%, var(--tan) 70%, transparent 100%);
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .wrap--narrow { max-width: 760px; }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+      font-weight: 300;
+      color: var(--red-dark);
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-body {
+      font-family: var(--font-editorial);
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: #3a2b1a;
+    }
+
+    .divider {
+      width: 90px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--tan), transparent);
+      margin: 1.6rem 0 2rem;
+    }
+
+    /* ── CARDS ─────────────────────────────────────────── */
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--tan);
+      padding: 2.4rem 2rem;
+      position: relative;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1.6rem;
+    }
+
+    .card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+    @media (max-width: 900px) {
+      .card-grid--2, .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; }
+    }
+
+    .card__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .card__price {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--red-dark);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .card__price span {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--tan-dark);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .card__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--red-dark);
+      margin-bottom: 1rem;
+    }
+
+    .card__list {
+      list-style: none;
+      font-family: var(--font-editorial);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: #3a2b1a;
+    }
+
+    .card__list li {
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: 0.55rem;
+    }
+
+    .card__list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--tan-dark);
+    }
+
+    .card--featured {
+      background: var(--red);
+      border-color: var(--red-dark);
+    }
+    .card--featured .card__eyebrow { color: var(--cream-mid); }
+    .card--featured .card__price { color: var(--cream); }
+    .card--featured .card__price span { color: var(--cream-mid); }
+    .card--featured .card__title { color: var(--cream); }
+    .card--featured .card__list { color: var(--cream-mid); }
+    .card--featured .card__list li::before { color: var(--tan); }
+
+    /* ── FORMS ─────────────────────────────────────────── */
+    .form-panel {
+      background: var(--cream);
+      border: 1px solid var(--tan);
+      padding: 3rem 2.6rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 700px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-panel { padding: 2.2rem 1.6rem; }
+    }
+
+    .field { margin-bottom: 1.4rem; }
+
+    .field label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.55rem;
+    }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--tan);
+      padding: 0.85rem 1rem;
+      font-family: var(--font-editorial);
+      font-size: 0.98rem;
+      color: var(--black);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+
+    .field textarea { min-height: 110px; resize: vertical; }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem 1.2rem;
+    }
+    @media (max-width: 700px) { .checkbox-group { grid-template-columns: 1fr; } }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-editorial);
+      font-size: 0.95rem;
+    }
+
+    .checkbox-item input { width: 16px; height: 16px; accent-color: var(--red); }
+
+    .field-hint {
+      font-family: var(--font-editorial);
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--tan-dark);
+      margin-top: 0.4rem;
+    }
+
+    /* ── BUTTONS ───────────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--red);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.4rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, letter-spacing 0.25s;
+    }
+    .btn-primary:hover { background: var(--red-dark); letter-spacing: 0.26em; transform: translateY(-1px); }
+    .btn-primary:disabled { background: var(--tan); cursor: not-allowed; transform: none; letter-spacing: 0.2em; }
+
+    .btn-outline-dark {
+      display: inline-block;
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, letter-spacing 0.25s;
+    }
+    .btn-outline-dark:hover { background: var(--red); color: var(--cream); letter-spacing: 0.26em; }
+
+    /* ── QUANTITY STEPPER ──────────────────────────────── */
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--tan);
+      background: var(--white);
+    }
+    .stepper button {
+      width: 42px;
+      height: 42px;
+      background: var(--cream);
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--red-dark);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .stepper button:hover { background: var(--tan); }
+    .stepper button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .stepper input {
+      width: 52px;
+      height: 42px;
+      border: none;
+      border-left: 1px solid var(--tan);
+      border-right: 1px solid var(--tan);
+      text-align: center;
+      font-family: var(--font-editorial);
+      font-size: 1.05rem;
+      background: var(--white);
+    }
+
+    /* ── ORDER SUMMARY ─────────────────────────────────── */
+    .summary {
+      background: var(--black);
+      color: var(--cream);
+      padding: 2.2rem 2rem;
+      position: sticky;
+      top: 2rem;
+    }
+    .summary__row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-editorial);
+      font-size: 0.95rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(245,236,215,0.12);
+    }
+    .summary__row--total {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--cream);
+      border-bottom: none;
+      padding-top: 1.2rem;
+      margin-top: 0.4rem;
+      border-top: 1px solid var(--tan);
+    }
+    .summary__note {
+      font-family: var(--font-editorial);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--cream-mid);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--white);
+      border: 1px solid var(--tan);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--green);
+      padding: 0.3rem 0.6rem;
+      margin-left: 0.6rem;
+    }
+
+    .success-msg {
+      display: none;
+      background: var(--cream);
+      border: 1px solid var(--green);
+      padding: 1.2rem 1.4rem;
+      font-family: var(--font-editorial);
+      font-size: 0.92rem;
+      color: var(--green);
+      margin-top: 1.2rem;
+    }
+    .success-msg.is-visible { display: block; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: var(--red-deep);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--tan);
+    }
+
+    footer a { color: var(--cream-mid); text-decoration: none; }
+    footer a:hover { color: var(--cream); }
+    .ticket-type {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.2rem;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--tan);
+      padding: 1.4rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 700px) {
+      .ticket-type { grid-template-columns: 1fr; text-align: left; }
+    }
+    .ticket-type__name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--red-dark);
+      font-weight: 500;
+    }
+    .ticket-type__price {
+      font-family: var(--font-editorial);
+      font-size: 0.88rem;
+      color: var(--tan-dark);
+      margin-top: 0.2rem;
+    }
+    .includes-list {
+      list-style: none;
+      font-family: var(--font-editorial);
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: #3a2b1a;
+    }
+    .includes-list li { padding-left: 1.4rem; position: relative; margin-bottom: 0.5rem; }
+    .includes-list li::before { content: '✦'; position: absolute; left: 0; color: var(--tan-dark); font-size: 0.75rem; top: 0.3rem; }
+
+    .table-deal-box {
+      background: var(--cream-mid);
+      border: 1px solid var(--tan-dark);
+      padding: 1.6rem 1.6rem;
+      margin-top: 1.4rem;
+    }
+    .guest-note {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--tan-dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="site-nav-wrap">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="register.html" aria-current="page">Register</a>
+      <a href="vendors-sponsors.html">Vendors &amp; Sponsors</a>
+      <a href="network.html">Our Network</a>
+      <a href="get-involved.html">Get Involved</a>
+    </nav>
+  </div>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow">Luxury Picnic &amp; Panel · September 12</p>
+    <h1 class="page-header__title">Reserve Your <em>Seat</em></h1>
+    <p class="page-header__sub">
+      10 am – 2 pm at Candlewood Lake Park, 36 E Hayestown Rd, Danbury, CT 06810
+    </p>
+    <div class="page-header__bottom-rule"></div>
+  </header>
+
+  <main class="wrap">
+    <div class="split">
+
+      <!-- LEFT: DETAILS + FORM -->
+      <div>
+        <p class="section-label">What's Included</p>
+        <h2 class="section-title">Every Seat Comes With</h2>
+        <ul class="includes-list">
+          <li>A charcuterie spread, finger foods, and snacks throughout the morning</li>
+          <li>A seat at a beautifully decorated picnic table with lakeside and mountain views</li>
+          <li>Access to our food and drink vendors</li>
+          <li>Entry to a vendor village of women-owned businesses, curated just for you</li>
+          <li>Face time with some of Connecticut's most successful women — entrepreneurs, politicians, executives, and researchers</li>
+          <li>Plenty of opportunities to socialize with a room full of driven women</li>
+          <li>Multiple professional photo moments — dress your best, but skip the heels, we'll be on the grass</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <p class="section-label">Ticket Options</p>
+        <h2 class="section-title">Choose How You're Joining Us</h2>
+
+        <div class="ticket-type">
+          <div>
+            <div class="ticket-type__name">Individual Ticket</div>
+            <div class="ticket-type__price">$30 per seat</div>
+          </div>
+          <div class="guest-note">Perfect if you're coming solo or with a few friends.</div>
+          <div class="stepper" id="qtyStepper">
+            <button type="button" id="qtyMinus" aria-label="Decrease tickets">–</button>
+            <input type="number" id="qtyInput" value="1" min="1" max="8" readonly />
+            <button type="button" id="qtyPlus" aria-label="Increase tickets">+</button>
+          </div>
+        </div>
+
+        <div class="table-deal-box">
+          <div class="toggle-row" style="border:none; background:transparent; padding:0;">
+            <div>
+              <div class="ticket-type__name" style="font-size:1.05rem;">Reserve a Full Table <span class="badge">Best Value</span></div>
+              <div class="ticket-type__price">$200 flat — seats 8</div>
+            </div>
+            <label class="checkbox-item">
+              <input type="checkbox" id="tableDeal" />
+              I'm filling all 8 seats
+            </label>
+          </div>
+          <p class="field-hint" style="margin-top:0.8rem;">
+            The table deal is only available when all 8 seats are filled. If you can't fill a table
+            on your own, register individually and we'll seat you with other guests.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <form id="registerForm">
+          <p class="section-label">Your Information</p>
+          <h2 class="section-title">Registrant Details</h2>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+            <div class="field">
+              <label for="discountCode">Discount Code (optional)</label>
+              <input type="text" id="discountCode" name="discountCode" placeholder="Enter code" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="guestNames">Guest Names <span style="text-transform:none; letter-spacing:0;">(one per line — helps us with table seating)</span></label>
+            <textarea id="guestNames" name="guestNames" placeholder="e.g. Jane Doe, Maria Lopez..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submitBtn">Continue to Payment</button>
+          <div class="success-msg" id="successMsg">
+            Thank you! Your registration details are ready — online payment via Stripe is being connected now,
+            so checkout will be enabled shortly. We'll follow up at the email you provided.
+          </div>
+        </form>
+      </div>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <aside>
+        <div class="summary">
+          <p class="page-header__eyebrow" style="color:var(--tan); margin-bottom:1.2rem;">Order Summary</p>
+          <div class="summary__row">
+            <span id="summaryLine">1 ticket × $30</span>
+            <span id="summarySubtotal">$30.00</span>
+          </div>
+          <div class="summary__row" id="discountRow" style="display:none;">
+            <span>Discount</span>
+            <span id="summaryDiscount">–$0.00</span>
+          </div>
+          <div class="summary__row summary__row--total">
+            <span>Total</span>
+            <span id="summaryTotal">$30.00</span>
+          </div>
+          <p class="summary__note">
+            Have a $5 discount code from us? Enter it above before you submit — it'll be reflected here.
+            Final charges are processed securely through Stripe at checkout.
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 The Young Women's Initiative &nbsp;·&nbsp; All Rights Reserved
+  </footer>
+
+  <script>
+    // ── Pricing state ──────────────────────────────────────
+    const TICKET_PRICE = 30;
+    const TABLE_PRICE = 200;
+    const TABLE_SEATS = 8;
+    // Demo-only discount codes. In production, discount/promo codes should be
+    // validated server-side (e.g. Stripe Coupons/Promotion Codes) — never trust
+    // client-side discount logic for the actual charge.
+    const DEMO_DISCOUNTS = { WELCOME5: 5 };
+
+    const qtyInput   = document.getElementById('qtyInput');
+    const qtyMinus   = document.getElementById('qtyMinus');
+    const qtyPlus    = document.getElementById('qtyPlus');
+    const tableDeal  = document.getElementById('tableDeal');
+    const discountCode = document.getElementById('discountCode');
+
+    const summaryLine     = document.getElementById('summaryLine');
+    const summarySubtotal = document.getElementById('summarySubtotal');
+    const summaryDiscount = document.getElementById('summaryDiscount');
+    const discountRow     = document.getElementById('discountRow');
+    const summaryTotal    = document.getElementById('summaryTotal');
+
+    function currentQty() {
+      return Math.min(8, Math.max(1, parseInt(qtyInput.value || '1', 10)));
+    }
+
+    function updateSummary() {
+      const isTable = tableDeal.checked;
+      qtyInput.readOnly = true;
+      qtyMinus.disabled = isTable;
+      qtyPlus.disabled = isTable;
+
+      let qty = isTable ? TABLE_SEATS : currentQty();
+      if (isTable) qtyInput.value = TABLE_SEATS;
+
+      let subtotal = isTable ? TABLE_PRICE : qty * TICKET_PRICE;
+
+      let discount = 0;
+      const code = discountCode.value.trim().toUpperCase();
+      if (!isTable && DEMO_DISCOUNTS[code]) {
+        discount = DEMO_DISCOUNTS[code] * qty;
+      }
+
+      summaryLine.textContent = isTable
+        ? 'Full table (8 seats)'
+        : `${qty} ticket${qty > 1 ? 's' : ''} × $${TICKET_PRICE}`;
+      summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+
+      if (discount > 0) {
+        discountRow.style.display = 'flex';
+        summaryDiscount.textContent = `–$${discount.toFixed(2)}`;
+      } else {
+        discountRow.style.display = 'none';
+      }
+
+      summaryTotal.textContent = `$${(subtotal - discount).toFixed(2)}`;
+    }
+
+    qtyMinus.addEventListener('click', () => {
+      qtyInput.value = Math.max(1, currentQty() - 1);
+      updateSummary();
+    });
+    qtyPlus.addEventListener('click', () => {
+      qtyInput.value = Math.min(8, currentQty() + 1);
+      updateSummary();
+    });
+    tableDeal.addEventListener('change', updateSummary);
+    discountCode.addEventListener('input', updateSummary);
+    updateSummary();
+
+    // ── Submit ─────────────────────────────────────────────
+    // TODO (backend): once Stripe + Formspree are set up, replace this handler with:
+    //   1. POST registration + ticket details to a Formspree endpoint for record-keeping
+    //   2. POST to the render.com backend to create a Stripe Checkout Session
+    //      (server-side, using the real ticket qty/table-deal/discount from this form)
+    //   3. Redirect the browser to the returned Stripe Checkout URL
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('successMsg').classList.add('is-visible');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendors &amp; Sponsors — The Young Women's Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #8B1A1A;
+      --red-dark:  #5C0E0E;
+      --red-deep:  #3D0808;
+      --cream:     #F5ECD7;
+      --cream-mid: #EDD9B4;
+      --tan:       #C9A87C;
+      --tan-dark:  #9A7A50;
+      --black:     #1A1108;
+      --white:     #FAF6EE;
+      --green:     #4A6741;
+
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'Libre Baskerville', serif;
+      --font-script:  'Pinyon Script', cursive;
+      --font-editorial: 'EB Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* ── SITE NAV ──────────────────────────────────────── */
+    .site-nav-wrap {
+      background: var(--red);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(92,14,14,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(61,8,8,0.5) 0%, transparent 55%);
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.2rem, 3vw, 2.6rem);
+      padding: 1.6rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-mid);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] { opacity: 1; color: var(--cream); border-bottom: 1px solid var(--tan); padding-bottom: 2px; }
+
+    /* ── PAGE HEADER ───────────────────────────────────── */
+    .page-header {
+      background: var(--red);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(92,14,14,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(61,8,8,0.5) 0%, transparent 55%);
+      text-align: center;
+      padding: 3.5rem 2rem 5rem;
+      position: relative;
+    }
+
+    .page-header__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 1rem;
+    }
+
+    .page-header__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .page-header__title em { font-weight: 600; font-style: normal; }
+
+    .page-header__sub {
+      max-width: 600px;
+      margin: 1.4rem auto 0;
+      font-family: var(--font-editorial);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--cream-mid);
+      line-height: 1.8;
+    }
+
+    .page-header__bottom-rule {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--tan) 30%, var(--cream-mid) 50%, var(--tan) 70%, transparent 100%);
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .wrap--narrow { max-width: 760px; }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+      font-weight: 300;
+      color: var(--red-dark);
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-body {
+      font-family: var(--font-editorial);
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: #3a2b1a;
+    }
+
+    .divider {
+      width: 90px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--tan), transparent);
+      margin: 1.6rem 0 2rem;
+    }
+
+    /* ── CARDS ─────────────────────────────────────────── */
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--tan);
+      padding: 2.4rem 2rem;
+      position: relative;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1.6rem;
+    }
+
+    .card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+    @media (max-width: 900px) {
+      .card-grid--2, .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; }
+    }
+
+    .card__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .card__price {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--red-dark);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .card__price span {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--tan-dark);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .card__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--red-dark);
+      margin-bottom: 1rem;
+    }
+
+    .card__list {
+      list-style: none;
+      font-family: var(--font-editorial);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: #3a2b1a;
+    }
+
+    .card__list li {
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: 0.55rem;
+    }
+
+    .card__list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--tan-dark);
+    }
+
+    .card--featured {
+      background: var(--red);
+      border-color: var(--red-dark);
+    }
+    .card--featured .card__eyebrow { color: var(--cream-mid); }
+    .card--featured .card__price { color: var(--cream); }
+    .card--featured .card__price span { color: var(--cream-mid); }
+    .card--featured .card__title { color: var(--cream); }
+    .card--featured .card__list { color: var(--cream-mid); }
+    .card--featured .card__list li::before { color: var(--tan); }
+
+    /* ── FORMS ─────────────────────────────────────────── */
+    .form-panel {
+      background: var(--cream);
+      border: 1px solid var(--tan);
+      padding: 3rem 2.6rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 700px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-panel { padding: 2.2rem 1.6rem; }
+    }
+
+    .field { margin-bottom: 1.4rem; }
+
+    .field label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 0.55rem;
+    }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--tan);
+      padding: 0.85rem 1rem;
+      font-family: var(--font-editorial);
+      font-size: 0.98rem;
+      color: var(--black);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+
+    .field textarea { min-height: 110px; resize: vertical; }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem 1.2rem;
+    }
+    @media (max-width: 700px) { .checkbox-group { grid-template-columns: 1fr; } }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-editorial);
+      font-size: 0.95rem;
+    }
+
+    .checkbox-item input { width: 16px; height: 16px; accent-color: var(--red); }
+
+    .field-hint {
+      font-family: var(--font-editorial);
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--tan-dark);
+      margin-top: 0.4rem;
+    }
+
+    /* ── BUTTONS ───────────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--red);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.4rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, letter-spacing 0.25s;
+    }
+    .btn-primary:hover { background: var(--red-dark); letter-spacing: 0.26em; transform: translateY(-1px); }
+    .btn-primary:disabled { background: var(--tan); cursor: not-allowed; transform: none; letter-spacing: 0.2em; }
+
+    .btn-outline-dark {
+      display: inline-block;
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, letter-spacing 0.25s;
+    }
+    .btn-outline-dark:hover { background: var(--red); color: var(--cream); letter-spacing: 0.26em; }
+
+    /* ── QUANTITY STEPPER ──────────────────────────────── */
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--tan);
+      background: var(--white);
+    }
+    .stepper button {
+      width: 42px;
+      height: 42px;
+      background: var(--cream);
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--red-dark);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .stepper button:hover { background: var(--tan); }
+    .stepper button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .stepper input {
+      width: 52px;
+      height: 42px;
+      border: none;
+      border-left: 1px solid var(--tan);
+      border-right: 1px solid var(--tan);
+      text-align: center;
+      font-family: var(--font-editorial);
+      font-size: 1.05rem;
+      background: var(--white);
+    }
+
+    /* ── ORDER SUMMARY ─────────────────────────────────── */
+    .summary {
+      background: var(--black);
+      color: var(--cream);
+      padding: 2.2rem 2rem;
+      position: sticky;
+      top: 2rem;
+    }
+    .summary__row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-editorial);
+      font-size: 0.95rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(245,236,215,0.12);
+    }
+    .summary__row--total {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--cream);
+      border-bottom: none;
+      padding-top: 1.2rem;
+      margin-top: 0.4rem;
+      border-top: 1px solid var(--tan);
+    }
+    .summary__note {
+      font-family: var(--font-editorial);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--cream-mid);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--white);
+      border: 1px solid var(--tan);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--green);
+      padding: 0.3rem 0.6rem;
+      margin-left: 0.6rem;
+    }
+
+    .success-msg {
+      display: none;
+      background: var(--cream);
+      border: 1px solid var(--green);
+      padding: 1.2rem 1.4rem;
+      font-family: var(--font-editorial);
+      font-size: 0.92rem;
+      color: var(--green);
+      margin-top: 1.2rem;
+    }
+    .success-msg.is-visible { display: block; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: var(--red-deep);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--tan);
+    }
+
+    footer a { color: var(--cream-mid); text-decoration: none; }
+    footer a:hover { color: var(--cream); }
+  </style>
+</head>
+<body>
+  <div class="site-nav-wrap">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="register.html">Register</a>
+      <a href="vendors-sponsors.html" aria-current="page">Vendors &amp; Sponsors</a>
+      <a href="network.html">Our Network</a>
+      <a href="get-involved.html">Get Involved</a>
+    </nav>
+  </div>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow">Luxury Picnic &amp; Panel · September 12</p>
+    <h1 class="page-header__title">Vendors &amp; <em>Sponsors</em></h1>
+    <p class="page-header__sub">
+      Put your business in front of 250+ driven women at Candlewood Lake Park. A few spots
+      remain for our launch event — apply below.
+    </p>
+    <div class="page-header__bottom-rule"></div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- VENDORS -->
+    <p class="section-label">Marketplace</p>
+    <h2 class="section-title">Vendor Packages</h2>
+    <p class="section-body" style="margin-bottom:2rem;">
+      Set up in our vendor village and sell directly to guests throughout the event. All vendors
+      must be women-owned.
+    </p>
+
+    <div class="card-grid card-grid--2" style="margin-bottom:3.5rem;">
+      <div class="card">
+        <p class="card__eyebrow">Vendor</p>
+        <div class="card__price">$50</div>
+        <h3 class="card__title">Food &amp; Drink Vendor</h3>
+        <ul class="card__list">
+          <li>Dedicated table space in the vendor village</li>
+          <li>Permission to sell food or beverage items on site</li>
+          <li>Listing on the event's vendor page</li>
+          <li>Direct access to 250+ attendees</li>
+          <li>Signage space for your business name/logo</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="card__eyebrow">Vendor</p>
+        <div class="card__price">$40</div>
+        <h3 class="card__title">General Vendor</h3>
+        <ul class="card__list">
+          <li>Dedicated table space in the vendor village</li>
+          <li>Sell products, services, or merchandise on site</li>
+          <li>Listing on the event's vendor page</li>
+          <li>Direct access to 250+ attendees</li>
+          <li>Signage space for your business name/logo</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SPONSORS -->
+    <p class="section-label">Partnership</p>
+    <h2 class="section-title">Sponsorship Packages</h2>
+    <p class="section-body" style="margin-bottom:2rem;">
+      Sponsors help make the Luxury Picnic &amp; Panel possible and get visible recognition in
+      front of our community, before, during, and after the event.
+    </p>
+
+    <div class="card-grid card-grid--2">
+      <div class="card card--featured">
+        <p class="card__eyebrow">Presenting Sponsor</p>
+        <div class="card__price">$500</div>
+        <h3 class="card__title">Presenting</h3>
+        <ul class="card__list">
+          <li>Top billing as the event's Presenting Sponsor across all materials</li>
+          <li>Logo featured prominently on event signage, website, and social media</li>
+          <li>Verbal recognition during the panel program</li>
+          <li>Premium table placement in the vendor village</li>
+          <li>Two complimentary event tickets</li>
+          <li>Dedicated social media feature post</li>
+          <li>Logo included in all post-event recap content</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="card__eyebrow">Main Sponsor</p>
+        <div class="card__price">$300</div>
+        <h3 class="card__title">Main</h3>
+        <ul class="card__list">
+          <li>Logo featured on event signage, website, and social media</li>
+          <li>Verbal recognition during the panel program</li>
+          <li>Preferred table placement in the vendor village</li>
+          <li>One complimentary event ticket</li>
+          <li>Logo included in post-event recap content</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="card__eyebrow">Supporting Sponsor</p>
+        <div class="card__price">$200</div>
+        <h3 class="card__title">Supporting</h3>
+        <ul class="card__list">
+          <li>Logo featured on event website and social media</li>
+          <li>Recognition on event signage</li>
+          <li>One complimentary event ticket</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="card__eyebrow">Contributing Sponsor</p>
+        <div class="card__price">$100</div>
+        <h3 class="card__title">Contributing</h3>
+        <ul class="card__list">
+          <li>Name listed on event website and signage</li>
+          <li>Recognition in our thank-you social media post</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- APPLICATION FORM -->
+    <p class="section-label">Apply</p>
+    <h2 class="section-title">Vendor &amp; Sponsor Application</h2>
+
+    <div class="form-panel">
+      <form id="vendorForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="field">
+            <label for="businessName">Business Name</label>
+            <input type="text" id="businessName" name="businessName" required />
+          </div>
+          <div class="field">
+            <label for="contactName">Contact Name</label>
+            <input type="text" id="contactName" name="contactName" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="applicationType">I'm Applying As A</label>
+            <select id="applicationType" name="applicationType" required>
+              <option value="">Select one</option>
+              <option>Food &amp; Drink Vendor — $50</option>
+              <option>General Vendor — $40</option>
+              <option>Presenting Sponsor — $500</option>
+              <option>Main Sponsor — $300</option>
+              <option>Supporting Sponsor — $200</option>
+              <option>Contributing Sponsor — $100</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="website">Website / Instagram (optional)</label>
+            <input type="text" id="website" name="website" placeholder="@yourbusiness" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes">Tell Us About Your Business</label>
+          <textarea id="notes" name="notes" placeholder="What you sell/offer, and anything we should know about your setup"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" id="vendorSubmitBtn">Submit Application</button>
+        <div class="success-msg" id="vendorSuccessMsg">
+          Thank you for applying! We're finishing setup on our application system — a member of
+          our team will follow up at the email you provided to confirm your spot and collect payment.
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 The Young Women's Initiative &nbsp;·&nbsp; All Rights Reserved
+  </footer>
+
+  <script>
+    // TODO (backend): swap the form `action` above for the real Formspree endpoint
+    // once the form is created, and wire payment collection (Stripe) for the
+    // selected vendor/sponsor tier after the application is reviewed/approved.
+    document.getElementById('vendorForm').addEventListener('submit', function (e) {
+      // Once a real Formspree endpoint is set, remove this preventDefault so the
+      // native form submission (POST to Formspree) goes through.
+      e.preventDefault();
+      document.getElementById('vendorSuccessMsg').classList.add('is-visible');
+    });
+  </script>
+</body>
+</html>

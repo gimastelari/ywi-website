@@ -39,6 +39,33 @@
       overflow-x: hidden;
     }
 
+    /* ── SITE NAV ──────────────────────────────────────── */
+    .site-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.2rem, 3vw, 2.6rem);
+      padding: 1.6rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-mid);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] { opacity: 1; color: var(--cream); border-bottom: 1px solid var(--tan); padding-bottom: 2px; }
+
     /* ── SECTION 1 — HERO ─────────────────────────────── */
     .hero {
       background-color: var(--red);
@@ -207,6 +234,13 @@
       color: #3a2b1a;
       margin-bottom: 2.2rem;
       max-width: 520px;
+    }
+
+    .event__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
     }
 
     .btn-primary {
@@ -414,6 +448,13 @@
 
   <!-- ── SECTION 1: HERO ────────────────────────────────── -->
   <section class="hero">
+    <nav class="site-nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="register.html">Register</a>
+      <a href="vendors-sponsors.html">Vendors &amp; Sponsors</a>
+      <a href="network.html">Our Network</a>
+      <a href="get-involved.html">Get Involved</a>
+    </nav>
     <img
       class="hero__logo"
       src="assets/img/logo.png"
@@ -421,9 +462,9 @@
     />
     <div class="hero__divider"></div>
     <p class="hero__mission">
-      The Young Women's Initiative exists to bring together the next generation of world-builders.
-      We create social experiences, educational programs, and career-defining opportunities that
-      empower young women to pursue extraordinary careers and lead meaningful change.
+      The Young Women's Initiative exists to equip young women with the tools, community, and space
+      they need to search for, discover, and align with their sense of purpose — empowering them to
+      step into every chapter of their lives with clarity and confidence.
     </p>
     <div class="hero__bottom-rule"></div>
   </section>
@@ -436,36 +477,42 @@
     </div>
 
     <div class="event__content">
-      <p class="event__label">Launch Event · 2025</p>
+      <p class="event__label">Launch Event · 2026</p>
       <h2 class="event__title">
-        An Afternoon<br>
-        <em>Worth Remembering</em>
+        Luxury<br>
+        <em>Picnic &amp; Panel</em>
       </h2>
 
       <div class="event__meta">
         <span>
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          September 5th
+          September 12th
         </span>
         <span>
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          12 pm – 3 pm
+          10 am – 2 pm
         </span>
         <span>
           <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Candlewood Lake Park, Danbury CT
+          36 E Hayestown Rd, Danbury, CT 06810
         </span>
       </div>
 
       <p class="event__desc">
-        The Luxury Picnic is our grand opening — a sun-soaked afternoon at Candlewood Lake Park
-        designed for women who dream big and live beautifully. Enjoy curated lunch spreads, live
-        performances by local artists, and inspiring talks from Connecticut's most successful women:
-        entrepreneurs, politicians, and community leaders. Explore a marketplace of women-owned vendors,
-        and leave with new friends, new ideas, and a new sense of what's possible.
+        The Luxury Picnic is our grand opening — a sun-soaked morning at Candlewood Lake Park
+        designed for women to connect over a luxurious picnic brunch. Enjoy curated lunch spreads,
+        live music, and inspiring talks from Connecticut's most successful women: entrepreneurs,
+        politicians, community leaders, executives, and researchers. We hope this event will give
+        a new community a sense of the beauty, taste, social opportunities, and real value that
+        they can take home with them in their personal and professional lives when they join our
+        events. Explore a marketplace of women-owned vendors, and leave with new friends, new
+        ideas, and a new sense of what's possible.
       </p>
 
-      <a href="#" class="btn-primary">Register Now</a>
+      <div class="event__actions">
+        <a href="register.html" class="btn-primary">Register Now</a>
+        <a href="vendors-sponsors.html" class="btn-outline-dark">Vendors &amp; Sponsors</a>
+      </div>
     </div>
   </section>
 
@@ -475,10 +522,10 @@
       <p class="cta-panel__eyebrow">Community</p>
       <h3 class="cta-panel__heading">Join Our<br>Network</h3>
       <p class="cta-panel__body">
-        Become part of a growing circle of driven young women building careers,
-        forging connections, and redefining what's possible together.
+        Become part of a growing circle of driven young women finding their purpose
+        and community to lead extraordinary personal and professional lives.
       </p>
-      <a href="#" class="btn-outline-dark">Join the Network</a>
+      <a href="network.html" class="btn-outline-dark">Join the Network</a>
     </div>
 
     <div class="cta-panel cta-panel--right">
@@ -488,7 +535,7 @@
         Mentor, sponsor, speak, or collaborate. There are many ways to invest
         in the next generation — and we'd love to build something together.
       </p>
-      <a href="#" class="btn-outline-light">Get Involved</a>
+      <a href="get-involved.html" class="btn-outline-light">Get Involved</a>
     </div>
   </section>
 
