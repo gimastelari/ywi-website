@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables — NEVER commit real secrets (Stripe keys, etc.)
+.env
+.env.local
+.env.*.local
+
+# Local SQLite database (created automatically when the backend runs — don't push real registration data to GitHub)
+*.db
+*.sqlite
+*.sqlite3
+
+# OS / editor clutter
+.DS_Store
+*.log
+.vscode/
