@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Confirmed — The Young Women's Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #8B1A1A; --red-dark: #5C0E0E; --red-deep: #3D0808;
+      --cream: #F5ECD7; --cream-mid: #EDD9B4; --tan: #C9A87C; --tan-dark: #9A7A50;
+      --black: #1A1108; --white: #FAF6EE; --green: #4A6741;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Libre Baskerville', serif;
+      --font-editorial: 'EB Garamond', serif;
+    }
+    body {
+      background: var(--white); color: var(--black); font-family: var(--font-body);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+    }
+    .card {
+      max-width: 520px; width: 100%; background: var(--cream); border: 1px solid var(--tan);
+      padding: 3rem 2.4rem; text-align: center;
+    }
+    .eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--tan-dark);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--red-dark); margin-bottom: 0.8rem;
+    }
+    .status { font-family: var(--font-editorial); font-style: italic; color: var(--tan-dark); font-size: 0.95rem; }
+    .details {
+      display: none; text-align: left; margin-top: 2rem; padding-top: 2rem;
+      border-top: 1px solid var(--tan);
+    }
+    .details.is-visible { display: block; }
+    .row {
+      display: flex; justify-content: space-between; font-family: var(--font-editorial);
+      font-size: 0.95rem; margin-bottom: 0.7rem;
+    }
+    .row span:first-child { color: var(--tan-dark); }
+    .row span:last-child { color: var(--black); font-weight: 500; }
+    .thanks {
+      margin-top: 2rem; font-family: var(--font-editorial); font-size: 0.95rem;
+      line-height: 1.7; color: #3a2b1a;
+    }
+    .thanks a { color: var(--red-dark); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">Luxury Picnic &amp; Panel · September 12</p>
+    <h1 id="headline">You're Confirmed</h1>
+    <p class="status" id="status">Finalizing your confirmation…</p>
+
+    <div class="details" id="details">
+      <div class="row"><span>Confirmation #</span><span id="conf-id"></span></div>
+      <div class="row"><span>Type</span><span id="conf-type"></span></div>
+      <div class="row"><span>Date Confirmed</span><span id="conf-date"></span></div>
+    </div>
+
+    <p class="thanks">
+      Thank you for being part of The Young Women's Initiative. We can't wait to see you at
+      Candlewood Lake Park. A receipt has been sent to your email — questions in the meantime,
+      reach us at <a href="mailto:hello@theyoungwomensinitiative.com">hello@theyoungwomensinitiative.com</a>.
+    </p>
+  </div>
+
+  <script>
+    // TODO: swap in the real deployed backend URL once the YWI Render project is live.
+    const BACKEND = "https://YOUR-YWI-BACKEND.onrender.com";
+
+    const typeLabels = {
+      ywi_ticket:  "Event Ticket",
+      ywi_vendor:  "Vendor Package",
+      ywi_sponsor: "Sponsorship",
+    };
+
+    (async function finalize() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id");
+      const statusEl = document.getElementById("status");
+
+      if (!sessionId) {
+        statusEl.textContent = "No session found — if you completed payment, check your email for confirmation.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BACKEND}/finalize-registration`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "finalize-failed");
+
+        statusEl.textContent = "You're all set — see you there!";
+
+        document.getElementById("conf-id").textContent = "#YWI-" + (data.registrationId || sessionId.slice(-8).toUpperCase());
+        document.getElementById("conf-type").textContent = typeLabels[data.type] || "Registration";
+        document.getElementById("conf-date").textContent = new Date().toLocaleDateString("en-US", {
+          weekday: "long", year: "numeric", month: "long", day: "numeric"
+        });
+        document.getElementById("details").classList.add("is-visible");
+      } catch (err) {
+        console.error("Finalize failed", err);
+        statusEl.textContent = "Payment went through, but we hit a snag saving your details — email hello@theyoungwomensinitiative.com and we'll sort it out.";
+      }
+    })();
+  </script>
+</body>
+</html>

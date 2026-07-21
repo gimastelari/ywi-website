@@ -641,8 +641,11 @@
 
           <button type="submit" class="btn-primary" id="submitBtn">Continue to Payment</button>
           <div class="success-msg" id="successMsg">
-            Thank you! Your registration details are ready — online payment via Stripe is being connected now,
-            so checkout will be enabled shortly. We'll follow up at the email you provided.
+            Thank you! Taking you to secure checkout now…
+          </div>
+          <div class="success-msg" id="errorMsg" style="border-color:var(--red); color:var(--red-dark);">
+            Something went wrong starting checkout. Please try again, or email
+            hello@theyoungwomensinitiative.com and we'll get you registered.
           </div>
         </form>
       </div>
@@ -656,16 +659,16 @@
             <span id="summarySubtotal">$30.00</span>
           </div>
           <div class="summary__row" id="discountRow" style="display:none;">
-            <span>Discount</span>
-            <span id="summaryDiscount">–$0.00</span>
+            <span>Discount code</span>
+            <span id="summaryDiscount">Applied at checkout</span>
           </div>
           <div class="summary__row summary__row--total">
-            <span>Total</span>
+            <span>Estimated Total</span>
             <span id="summaryTotal">$30.00</span>
           </div>
           <p class="summary__note">
-            Have a $5 discount code from us? Enter it above before you submit — it'll be reflected here.
-            Final charges are processed securely through Stripe at checkout.
+            Have a discount code from us? Enter it above — it's verified securely at checkout, so the
+            final total (after any valid discount) will appear on the Stripe payment page.
           </p>
         </div>
       </aside>
@@ -678,14 +681,18 @@
   </footer>
 
   <script>
-    // ── Pricing state ──────────────────────────────────────
+    // TODO: swap in the real deployed backend URL once the YWI Render project is live.
+    const BACKEND = "https://YOUR-YWI-BACKEND.onrender.com";
+    const FORMSPREE_TICKETS_URL = "https://formspree.io/f/mdaqoklz";
+
+    // ── Display-only pricing (for the on-page estimate) ────
+    // NOTE: this is a UI estimate only. The real charge — including any
+    // discount code — is computed server-side in server.js and shown on
+    // the Stripe checkout page. Nothing about discount validity or amount
+    // is ever calculated or stored in this file.
     const TICKET_PRICE = 30;
     const TABLE_PRICE = 200;
     const TABLE_SEATS = 8;
-    // Demo-only discount codes. In production, discount/promo codes should be
-    // validated server-side (e.g. Stripe Coupons/Promotion Codes) — never trust
-    // client-side discount logic for the actual charge.
-    const DEMO_DISCOUNTS = { WELCOME5: 5 };
 
     const qtyInput   = document.getElementById('qtyInput');
     const qtyMinus   = document.getElementById('qtyMinus');
@@ -695,7 +702,6 @@
 
     const summaryLine     = document.getElementById('summaryLine');
     const summarySubtotal = document.getElementById('summarySubtotal');
-    const summaryDiscount = document.getElementById('summaryDiscount');
     const discountRow     = document.getElementById('discountRow');
     const summaryTotal    = document.getElementById('summaryTotal');
 
@@ -714,25 +720,13 @@
 
       let subtotal = isTable ? TABLE_PRICE : qty * TICKET_PRICE;
 
-      let discount = 0;
-      const code = discountCode.value.trim().toUpperCase();
-      if (!isTable && DEMO_DISCOUNTS[code]) {
-        discount = DEMO_DISCOUNTS[code] * qty;
-      }
-
       summaryLine.textContent = isTable
         ? 'Full table (8 seats)'
         : `${qty} ticket${qty > 1 ? 's' : ''} × $${TICKET_PRICE}`;
       summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+      summaryTotal.textContent = `$${subtotal.toFixed(2)} (before any discount)`;
 
-      if (discount > 0) {
-        discountRow.style.display = 'flex';
-        summaryDiscount.textContent = `–$${discount.toFixed(2)}`;
-      } else {
-        discountRow.style.display = 'none';
-      }
-
-      summaryTotal.textContent = `$${(subtotal - discount).toFixed(2)}`;
+      discountRow.style.display = (!isTable && discountCode.value.trim()) ? 'flex' : 'none';
     }
 
     qtyMinus.addEventListener('click', () => {
@@ -747,15 +741,63 @@
     discountCode.addEventListener('input', updateSummary);
     updateSummary();
 
-    // ── Submit ─────────────────────────────────────────────
-    // TODO (backend): once Stripe + Formspree are set up, replace this handler with:
-    //   1. POST registration + ticket details to a Formspree endpoint for record-keeping
-    //   2. POST to the render.com backend to create a Stripe Checkout Session
-    //      (server-side, using the real ticket qty/table-deal/discount from this form)
-    //   3. Redirect the browser to the returned Stripe Checkout URL
-    document.getElementById('registerForm').addEventListener('submit', function (e) {
+    // ── Submit: save registration, then create a Stripe Checkout Session ──
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      document.getElementById('successMsg').classList.add('is-visible');
+
+      const submitBtn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMsg');
+      const errorMsg = document.getElementById('errorMsg');
+      successMsg.classList.remove('is-visible');
+      errorMsg.classList.remove('is-visible');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing…';
+
+      const isTable = tableDeal.checked;
+      const ticketType = isTable ? 'table' : 'individual';
+      const qty = isTable ? TABLE_SEATS : currentQty();
+
+      const formData = {
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        guestNames: document.getElementById('guestNames').value,
+        discountCode: discountCode.value.trim(),
+        ticketType,
+        qty,
+        formspreeUrl: FORMSPREE_TICKETS_URL,
+      };
+
+      try {
+        const saveRes = await fetch(`${BACKEND}/save-registration`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'ywi_ticket', data: formData }),
+        });
+        const saveData = await saveRes.json();
+        if (!saveRes.ok) throw new Error(saveData.error || 'save-failed');
+
+        const sessionRes = await fetch(`${BACKEND}/create-ticket-session`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            registrationId: saveData.registrationId,
+            ticketType,
+            qty,
+            discountCode: formData.discountCode,
+          }),
+        });
+        const sessionData = await sessionRes.json();
+        if (!sessionRes.ok || !sessionData.url) throw new Error(sessionData.error || 'session-failed');
+
+        successMsg.classList.add('is-visible');
+        window.location.href = sessionData.url;
+      } catch (err) {
+        console.error('Checkout failed:', err);
+        errorMsg.classList.add('is-visible');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue to Payment';
+      }
     });
   </script>
 </body>

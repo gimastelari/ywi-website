@@ -608,7 +608,7 @@
     <h2 class="section-title">Vendor &amp; Sponsor Application</h2>
 
     <div class="form-panel">
-      <form id="vendorForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="vendorForm">
         <div class="form-row">
           <div class="field">
             <label for="businessName">Business Name</label>
@@ -636,12 +636,12 @@
             <label for="applicationType">I'm Applying As A</label>
             <select id="applicationType" name="applicationType" required>
               <option value="">Select one</option>
-              <option>Food &amp; Drink Vendor — $50</option>
-              <option>General Vendor — $40</option>
-              <option>Presenting Sponsor — $500</option>
-              <option>Main Sponsor — $300</option>
-              <option>Supporting Sponsor — $200</option>
-              <option>Contributing Sponsor — $100</option>
+              <option value="vendor:food_drink">Food &amp; Drink Vendor — $50</option>
+              <option value="vendor:general">General Vendor — $40</option>
+              <option value="sponsor:presenting">Presenting Sponsor — $500</option>
+              <option value="sponsor:main">Main Sponsor — $300</option>
+              <option value="sponsor:supporting">Supporting Sponsor — $200</option>
+              <option value="sponsor:contributing">Contributing Sponsor — $100</option>
             </select>
           </div>
           <div class="field">
@@ -655,10 +655,13 @@
           <textarea id="notes" name="notes" placeholder="What you sell/offer, and anything we should know about your setup"></textarea>
         </div>
 
-        <button type="submit" class="btn-primary" id="vendorSubmitBtn">Submit Application</button>
+        <button type="submit" class="btn-primary" id="vendorSubmitBtn">Continue to Payment</button>
         <div class="success-msg" id="vendorSuccessMsg">
-          Thank you for applying! We're finishing setup on our application system — a member of
-          our team will follow up at the email you provided to confirm your spot and collect payment.
+          Thank you! Taking you to secure checkout now…
+        </div>
+        <div class="success-msg" id="vendorErrorMsg" style="border-color:var(--red); color:var(--red-dark);">
+          Something went wrong starting checkout. Please try again, or email
+          hello@theyoungwomensinitiative.com and we'll get you set up.
         </div>
       </form>
     </div>
@@ -669,14 +672,68 @@
   </footer>
 
   <script>
-    // TODO (backend): swap the form `action` above for the real Formspree endpoint
-    // once the form is created, and wire payment collection (Stripe) for the
-    // selected vendor/sponsor tier after the application is reviewed/approved.
-    document.getElementById('vendorForm').addEventListener('submit', function (e) {
-      // Once a real Formspree endpoint is set, remove this preventDefault so the
-      // native form submission (POST to Formspree) goes through.
+    // TODO: swap in the real deployed backend URL once the YWI Render project is live.
+    const BACKEND = "https://YOUR-YWI-BACKEND.onrender.com";
+    const FORMSPREE_VENDOR_URL = "https://formspree.io/f/xlgqedwp";
+    const FORMSPREE_SPONSOR_URL = "https://formspree.io/f/xqerkadd";
+
+    document.getElementById('vendorForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      document.getElementById('vendorSuccessMsg').classList.add('is-visible');
+
+      const submitBtn = document.getElementById('vendorSubmitBtn');
+      const successMsg = document.getElementById('vendorSuccessMsg');
+      const errorMsg = document.getElementById('vendorErrorMsg');
+      successMsg.classList.remove('is-visible');
+      errorMsg.classList.remove('is-visible');
+
+      const selection = document.getElementById('applicationType').value; // e.g. "vendor:food_drink"
+      if (!selection) return;
+      const [kind, subtype] = selection.split(':'); // kind = "vendor" | "sponsor"
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing…';
+
+      const formData = {
+        businessName: document.getElementById('businessName').value,
+        contactName: document.getElementById('contactName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        applicationType: document.getElementById('applicationType').selectedOptions[0].textContent,
+        website: document.getElementById('website').value,
+        notes: document.getElementById('notes').value,
+        formspreeUrl: kind === 'vendor' ? FORMSPREE_VENDOR_URL : FORMSPREE_SPONSOR_URL,
+      };
+
+      try {
+        const saveRes = await fetch(`${BACKEND}/save-registration`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: `ywi_${kind}`, data: formData }),
+        });
+        const saveData = await saveRes.json();
+        if (!saveRes.ok) throw new Error(saveData.error || 'save-failed');
+
+        const endpoint = kind === 'vendor' ? 'create-vendor-session' : 'create-sponsor-session';
+        const body = kind === 'vendor'
+          ? { registrationId: saveData.registrationId, vendorType: subtype }
+          : { registrationId: saveData.registrationId, tier: subtype };
+
+        const sessionRes = await fetch(`${BACKEND}/${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const sessionData = await sessionRes.json();
+        if (!sessionRes.ok || !sessionData.url) throw new Error(sessionData.error || 'session-failed');
+
+        successMsg.classList.add('is-visible');
+        window.location.href = sessionData.url;
+      } catch (err) {
+        console.error('Checkout failed:', err);
+        errorMsg.classList.add('is-visible');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue to Payment';
+      }
     });
   </script>
 </body>
