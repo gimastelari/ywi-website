@@ -524,7 +524,7 @@
     <div class="divider"></div>
 
     <div class="form-panel">
-      <form id="involvedForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="involvedForm" action="https://formspree.io/f/mlgqbqla" method="POST">
         <div class="form-row">
           <div class="field">
             <label for="fullName">Full Name</label>
@@ -595,10 +595,31 @@
   </footer>
 
   <script>
-    // TODO (backend): swap the form `action` above for the real Formspree endpoint.
-    document.getElementById('involvedForm').addEventListener('submit', function (e) {
+    document.getElementById('involvedForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      document.getElementById('involvedSuccessMsg').classList.add('is-visible');
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const successMsg = document.getElementById('involvedSuccessMsg');
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        });
+
+        if (!res.ok) throw new Error('submit-failed');
+
+        successMsg.classList.add('is-visible');
+        form.reset();
+      } catch (err) {
+        console.error('Get Involved form failed:', err);
+        alert("Something went wrong submitting your info — please try again, or email hello@theyoungwomensinitiative.com directly.");
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
+      }
     });
   </script>
 </body>
