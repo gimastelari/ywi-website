@@ -579,7 +579,7 @@
         <div class="ticket-type">
           <div>
             <div class="ticket-type__name">Individual Ticket</div>
-            <div class="ticket-type__price">$30 per seat</div>
+            <div class="ticket-type__price">$25 per seat</div>
           </div>
           <div class="guest-note">Perfect if you're coming solo or with a few friends.</div>
           <div class="stepper" id="qtyStepper">
@@ -593,7 +593,7 @@
           <div class="toggle-row" style="border:none; background:transparent; padding:0;">
             <div>
               <div class="ticket-type__name" style="font-size:1.05rem;">Reserve a Full Table <span class="badge">Best Value</span></div>
-              <div class="ticket-type__price">$200 flat — seats 8</div>
+              <div class="ticket-type__price">$160 flat — seats 8</div>
             </div>
             <label class="checkbox-item">
               <input type="checkbox" id="tableDeal" />
@@ -655,8 +655,8 @@
         <div class="summary">
           <p class="page-header__eyebrow" style="color:var(--tan); margin-bottom:1.2rem;">Order Summary</p>
           <div class="summary__row">
-            <span id="summaryLine">1 ticket × $30</span>
-            <span id="summarySubtotal">$30.00</span>
+            <span id="summaryLine">1 ticket × $25</span>
+            <span id="summarySubtotal">$25.00</span>
           </div>
           <div class="summary__row" id="discountRow" style="display:none;">
             <span>Discount code</span>
@@ -664,7 +664,7 @@
           </div>
           <div class="summary__row summary__row--total">
             <span>Estimated Total</span>
-            <span id="summaryTotal">$30.00</span>
+            <span id="summaryTotal">$25.00</span>
           </div>
           <p class="summary__note">
             Have a discount code from us? Enter it above — it's verified securely at checkout, so the
@@ -689,8 +689,8 @@
     // discount code — is computed server-side in server.js and shown on
     // the Stripe checkout page. Nothing about discount validity or amount
     // is ever calculated or stored in this file.
-    const TICKET_PRICE = 30;
-    const TABLE_PRICE = 200;
+    const TICKET_PRICE = 25;
+    const TABLE_PRICE = 160;
     const TABLE_SEATS = 8;
 
     const qtyInput   = document.getElementById('qtyInput');

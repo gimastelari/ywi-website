@@ -79,8 +79,8 @@ app.post("/save-registration", async (req, res) => {
 // sent to or computed in the browser, so they can't be read via
 // dev tools / view-source. Add new codes to DISCOUNT_CODES below.
 // =====================
-const TICKET_PRICE = 3000;   // $30.00, in cents
-const TABLE_PRICE = 20000;   // $200.00 flat, seats 8
+const TICKET_PRICE = 2500;   // $25.00, in cents
+const TABLE_PRICE = 16000;   // $160.00 flat, seats 8
 const TABLE_SEATS = 8;
 
 // cents off PER TICKET, individual tickets only — table deal is already a flat rate
